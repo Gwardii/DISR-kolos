@@ -37,6 +37,37 @@ classdef exampleTask3Tester < matlab.unittest.TestCase
 
         end
 
+        function task3recursion(testCase)
+            a1 = 0.5;
+            b1 = 1;
+            a2 = 0.2;
+            m1 = 20;
+            m2 = 5;
+            J1 = diag([0.2, 2, 2]);
+            J2 = diag([0.01, 0.1, 0.1]);
+            g = [0; -10; 0];
+            q = [0; pi / 2];
+            dq = [1; 2];
+            ddq = [-20/3; 10];
+
+            R_z = @(phi) [utils.omega(phi), zeros(2, 1); 0, 0, 1];
+
+            w_1 = [0; 0; 1];
+            r_01 = zeros(3, 1);
+            dr_01 = zeros(3, 1);
+            ddr_01 = zeros(3, 1);
+            R_10 = R_z(q1);
+            omega_1 = R_10 * w * dq(1);
+            eps_1 = R_10 * w * ddq(1);
+
+            s_C1 = [a1; 0; 0];
+            r_C1 = r_01 + R_10 * s_C1;
+            dr_C1 = dr_01 + utils.attachedMatrix(omega_1) * R_10 * s_C1;
+            ddr_C1 = ddr_01 + utils.attachedMatrix(eps_1) * R_10 * s_C1 + ...
+                utils.attachedMatrix(omega) * utils.attachedMatrix(omega) * R_10 * s_C1;
+
+        end
+
     end
 
 end

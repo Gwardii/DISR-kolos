@@ -34,12 +34,13 @@ classdef exampleTask4Tester < matlab.unittest.TestCase
 
             dL_dq = subs(dL_dq);
             L_q = subs(L_q);
-            solution = solve(dL_dq' + L_q' == 0);
+            Q = subs(Q);
+            solution = solve(dL_dq' + L_q' == Q);
 
             ddq = double([solution.ddq1; solution.ddq2]);
 
             testCase.verifyLessThan(norm(ddq - ...
-                [2.193619865618197; 5.059223176554562]), 1e-15)
+                [12.295145311140304; 22.736892706218249]), 1e-15)
 
         end
 

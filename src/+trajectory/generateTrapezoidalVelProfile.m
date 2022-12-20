@@ -22,7 +22,7 @@ function [q, v, a, inner_parameters] = generateTrapezoidalVelProfile( ...
 
     for i = 1:numel(fields)
 
-        if ~any(strcmp(fields{i}, [{'mode', 'q0', 'qk'}, varargin]))
+        if ~any(strcmp(fields{i}, [{'mode', 'q0', 'qk', 't0'}, varargin]))
             args = rmfield(args, fields{i});
         end
 

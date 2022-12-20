@@ -1,8 +1,8 @@
-classdef inverseKinematicsTester < matlab.unittest.TestCase
+classdef exampleTask2Tester < matlab.unittest.TestCase
 
     methods (Test)
 
-        function syncModeInnerParametersTest1(testCase)
+        function task2(testCase)
             t0 = 0;
             tk = 10;
             Ta = 2;
@@ -21,7 +21,7 @@ classdef inverseKinematicsTester < matlab.unittest.TestCase
             q(2, :) = acos(pom);
             q(1, :) = atan2(r(2) * (l1 + l2 * cos(q(2))) - r(1) * l2 * sin(q(2)), ...
                 r(1) * (l1 + l2 * cos(q(2))) + r(2) * l2 * sin(q(2)));
-            testCase.verifyLessThan(norm(q - [-0.303326385290135;1.81702693523074]),1e-14)
+            testCase.verifyLessThan(norm(q - [-0.303326385290135; 1.81702693523074]), 1e-14)
 
         end
 

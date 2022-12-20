@@ -1,8 +1,8 @@
-classdef jointAccToTorqueTester < matlab.unittest.TestCase
+classdef exampleTask3Tester < matlab.unittest.TestCase
 
     methods (Test)
 
-        function syncModeInnerParametersTest1(testCase)
+        function task3(testCase)
             a1 = 0.5;
             b1 = 1;
             a2 = 0.2;
@@ -15,6 +15,8 @@ classdef jointAccToTorqueTester < matlab.unittest.TestCase
             dq = [1; 2];
             ddq = [-20/3; 10];
 
+            syms q [2, 1]
+
             jacobians = kinematics.calculatePartialArticulatedJacobians2DOFSym(q, b1, [a1; a2]);
             J_v_1 = jacobians{1, 1};
             J_v_2 = jacobians{2, 1};
@@ -23,8 +25,15 @@ classdef jointAccToTorqueTester < matlab.unittest.TestCase
 
             M = m1 * (J_v_1' * J_v_1) + J_omega_1' * J1 * J_omega_1 + ...
                 m2 * (J_v_2' * J_v_2) + J_omega_2' * J2 * J_omega_2;
-            C = 
+            C = dynamics.calculateChristoffelMatrixSym(M, dq);
             G = -m1 * J_v_1' * g - m2 * J_v_2' * g;
+            q1 = q_(1);
+            q2 = q_(2);
+            M = double(subs(M));
+            C = double(subs(C));
+            G = double(subs(G));
+            tau = M * ddq + C * dq + G;
+            testCase.verifyLessThan(abs(tau - [63; 3]), 1e-13)
 
         end
 

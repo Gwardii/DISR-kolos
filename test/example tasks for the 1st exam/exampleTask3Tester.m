@@ -16,7 +16,7 @@ classdef exampleTask3Tester < matlab.unittest.TestCase
             dq = [1; 2];
             ddq = [-20/3; 10];
 
-            syms q [2, 1]
+            syms q [2, 1] real
 
             jacobians = kinematics.calculatePartialArticulatedJacobians2DOFSym(q, b1, [a1; a2]);
             J_v_1 = jacobians{1, 1};

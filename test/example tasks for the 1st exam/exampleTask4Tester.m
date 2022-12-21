@@ -19,7 +19,11 @@ classdef exampleTask4Tester < matlab.unittest.TestCase
             r_2 = R_z(q1) * [q2; 0; 0];
             r_tcp = R_z(q1) * [q2 + h; 0; 0];
             dr_2 = jacobian(r_2) * dq;
-            E_k = 0.5 * (m2 * dr_2' * dr_2 + J1(3, 3) * dq1 ^ 2 + J2(3, 3) * dq1 ^ 2);
+            R_10 = R_z(q1);
+            J1_0 = R_10 * J1 * R_z * R_10';
+            J2_0 = R_10 * J2 * R_z * R_10';
+
+            E_k = 0.5 * (m2 * dr_2' * dr_2 + J1_0(3, 3) * dq1 ^ 2 + J2_0(3, 3) * dq1 ^ 2);
             E_p = -g' * r_2 * m2;
             L_dq = jacobian(E_k, dq);
             L_q = jacobian(E_k - E_p, q);

@@ -9,11 +9,11 @@ function jacobians = calculatePartialArticulatedJacobians2DOF(q, l, c)
 
     for i = 1:n
 
-        d(:, i) = R(q(i)) * [c(i); 0; 0];
+        d(:, i) = R(sum(q(1:i))) * [c(i); 0; 0];
         J_v(:, i) = u_tilde * d(:, i);
 
         for j = (i - 1):-1:1
-            d(:, j) = R(q(j)) * (d(:, j + 1) + [l(j); 0; 0]);
+            d(:, j) = d(:, j + 1) + R(q(j)) * [l(j); 0; 0];
             J_v(:, j) = u_tilde * d(:, j);
         end
 
@@ -23,11 +23,11 @@ function jacobians = calculatePartialArticulatedJacobians2DOF(q, l, c)
     end
 
     if length(l) > n
-        d(:, n) = R(q(n)) * [l(n); 0; 0];
+        d(:, n) = R(sum(q(1:n))) * [l(n); 0; 0];
         J_v(:, n) = u_tilde * d(:, n);
 
         for j = (n - 1):-1:1
-            d(:, j) = R(q(j)) * (d(:, j + 1) + [l(j); 0; 0]);
+            d(:, j) = d(:, j + 1) + R(q(j)) * [l(j); 0; 0];
             J_v(:, j) = u_tilde * d(:, j);
         end
 
